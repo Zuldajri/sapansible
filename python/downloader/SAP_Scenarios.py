@@ -37,21 +37,8 @@ class DBScenario(Scenario):
         super(DBComponent, self).__init__(**kwargs)
 
 S4 = Scenario(
-    required_params = [
-    "product_version",
-    ],
+    required_params = [],
     packages = [
-        # S/4HANA 1909 - Java
-      Package(
-            name        = "NW_ABAP_OneHost:S4HANA1909.CORE.HDB.ABAP",
-            target_dir  = Package.dir_app,
-            retr_params = {"ENR": "73555000100900002474"},
-            condition   = ['app.product_version == "1909"'],
-            filter      = ['"1909" in r["Description"]', '"Java" in r["Description"]','"ZIP" in r["Infotype"]'],
-            os_avail    = [Package.os_indep],
-            os_var      = 'Package.os_indep',
-            selector    = Package.selector_newest,
-        ),
     ],
 )
 
