@@ -51,6 +51,7 @@ S4 = Scenario(
             os_avail    = [Package.os_indep],
             os_var      = 'Package.os_indep',
             selector    = Package.selector_newest,
+        ),
     ],
 )
 
