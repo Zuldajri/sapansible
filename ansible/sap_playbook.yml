@@ -87,3 +87,19 @@
        - hana_database.size != "LargeInstance"
        - hana_database.high_availability
        - hostvars[hana_database.nodes[0].ip_admin_nic].ansible_os_family == 'Suse'
+
+# Hana DB components install
+- hosts: hanadbnodes
+  become: true
+  become_user: root
+  any_errors_fatal: true
+  vars_files:
+    - "vars/ha-packages.yml"
+  pre_tasks:
+    - name: Include SAP HANA DB sizes
+      include_vars:
+        file: "{{ configs_path }}/hdb_sizes.json"
+        name: hdb_sizes
+  roles:
+    - role: hdb-server-install
+
