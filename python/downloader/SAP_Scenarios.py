@@ -39,6 +39,15 @@ class DBScenario(Scenario):
 S4 = Scenario(
     required_params = [],
     packages = [
+        Package(
+            name        = "SWPM20",
+            target_dir  = Package.dir_rti,
+            retr_params = {"ENR": "73555000100200007684"},
+            filter      = None,
+            os_avail    = [Package.os_linux, Package.os_windows],
+            os_var      = 'Config.bastion_os',
+            selector    = Package.selector_newest,
+        ),
     ],
 )
 
