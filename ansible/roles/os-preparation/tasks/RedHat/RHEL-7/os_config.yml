@@ -26,6 +26,7 @@
     dest: /etc/sysctl.d/sap_hana.conf
     content: |
        kernel.numa_balancing=0
+       
 - name: Task 3.8 - Disable Automatic NUMA Balancing 2
   command: sysctl -p /etc/sysctl.d/sap_hana.conf 
 
@@ -50,6 +51,7 @@
     content: |
        '@sapsys soft nproc unlimited'
        '@sapsys hard nproc unlimited'
+       
 - name: Task 3.14 - Disable ABRT, Core Dumps and kdump 1
   systemd:
      name: abrt-ccpp
