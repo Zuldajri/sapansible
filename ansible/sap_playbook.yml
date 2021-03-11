@@ -109,6 +109,8 @@
 
 # Windows jumpboxes components install
 - hosts: jumpboxes_windows
+  become: true
+  become_user: ADMIN_USER
   roles:
     - role: windows-jumpboxes-install
 
