@@ -8,8 +8,6 @@
   loop:
     - group: "sapsys"
       gid: "{{ sapsys_gid }}"
-    - group: "sapinst"
-      gid: "{{ sapinst_gid }}"
 
 - name: Ensure SAP users are created
   user:
