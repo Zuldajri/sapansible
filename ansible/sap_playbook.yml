@@ -15,6 +15,11 @@
       loop: "{{ output.databases|flatten(levels=1) }}"
       when: item.platform == 'HANA'
 
+    - name: Create dictionary with APP inforamtion from output.JSON
+      set_fact:
+        app_platform: "{{ item1 }}"
+      loop: "{{ output.application|flatten(levels=1) }}"
+
 # Inventory validation for HANA VMs
 - hosts: hanadbnodes
   become: true
@@ -23,6 +28,14 @@
     - role: inventory-validation
       when:
         - hana_database.size != "LargeInstance"
+
+# Inventory validation for HANA VMs
+- hosts: scs
+  become: true
+  become_user: root
+  roles:
+    - role: inventory-validation
+      
 
 # Prepare os, disks and mount points on Hana Database servers
 - hosts: hanadbnodes
@@ -45,6 +58,52 @@
         - ansible_facts['distribution_file_variety'] == 'SUSE'
         - ansible_facts['distribution_version'] is regex("(12\.[3-5]|15\.\d)")
         - hana_database.size != "LargeInstance"
+
+
+
+# Prepare os, disks and mount points on SCS server
+- hosts: scs
+  become: true
+  become_user: root
+  vars:
+    tier: preparation
+    app_sid: "S4SID"
+  vars_files:
+    - "vars/packages.yml"
+  pre_tasks:
+    - name: Include SAP APP sizes
+      include_vars:
+        file: "{{ configs_path }}/app_sizes.json"
+        name: app_sizes
+  max_fail_percentage: 0
+  roles:
+    - role: os-preparation-app
+    - role: disk-setup
+    - role: nfs-server-setup
+
+# Prepare SAP USERS
+- hosts: scs1
+  become: true
+  become_user: root
+  vars:
+    tier: preparation
+    sapadm_uid: 2100
+    sapsys_gid: 2000
+    scs_hostname: "{{ ansible_hostname }}"
+    scs_instance_number: "00"
+    sidadm_uid: 2000
+  roles:
+    - role: sap-users
+
+
+# Mount Azure File share on all linux jumpboxes including rti
+- hosts: scs
+  become: true
+  become_user: root
+  roles:
+    - role: mount-azure-files
+      when: output.software.storage_account_sapbits.file_share_name != ""
+
 
 # Mount Azure File share on all linux jumpboxes including rti
 - hosts: localhost:jumpboxes_linux
@@ -113,4 +172,3 @@
   become_user: ADMIN_USER
   roles:
     - role: windows-jumpboxes-install
-
