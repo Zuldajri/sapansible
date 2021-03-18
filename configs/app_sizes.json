@@ -3,6 +3,7 @@
     "Default": {
       "compute": {
         "vm_size": "Standard_D4s_v3",
+        "swap_size_gb": 2,
         "accelerated_networking": false
       },
       "storage": [
@@ -29,6 +30,7 @@
     "Default": {
       "compute": {
         "vm_size": "Standard_D4s_v3",
+        "swap_size_gb": 2,
         "accelerated_networking": false
       },
       "storage": [
@@ -55,6 +57,7 @@
     "Default": {
       "compute": {
         "vm_size": "Standard_D4s_v3",
+        "swap_size_gb": 2,
         "accelerated_networking": false
       },
       "storage": [
