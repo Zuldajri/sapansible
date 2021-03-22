@@ -27,8 +27,8 @@
   - name: Configure SWAP space
     lineinfile:
       dest: /etc/waagent.conf
-      regexp: "^{{ item1.prop }}="
-      line: "{{ item1.prop }}={{ item1.value }}"
+      regexp: "^{{ item.prop }}="
+      line: "{{ item.prop }}={{ item.value }}"
     loop:
       - { prop: "ResourceDisk.Format", value: "y" }
       - { prop: "ResourceDisk.EnableSwap", value: "y" }
