@@ -142,33 +142,33 @@
        - hostvars[hana_database.nodes[0].ip_admin_nic].ansible_os_family == 'Suse'
 
 # Hana DB components install
-- hosts: hanadbnodes
-  become: true
-  become_user: root
-  any_errors_fatal: true
-  vars_files:
-    - "vars/ha-packages.yml"
-  pre_tasks:
-    - name: Include SAP HANA DB sizes
-      include_vars:
-        file: "{{ configs_path }}/hdb_sizes.json"
-        name: hdb_sizes
-  roles:
-    - role: hdb-server-install
+#- hosts: hanadbnodes
+#  become: true
+#  become_user: root
+#  any_errors_fatal: true
+#  vars_files:
+#    - "vars/ha-packages.yml"
+#  pre_tasks:
+#    - name: Include SAP HANA DB sizes
+#      include_vars:
+#        file: "{{ configs_path }}/hdb_sizes.json"
+#        name: hdb_sizes
+#  roles:
+#    - role: hdb-server-install
     
 
 
 
 # Linux jumpboxes components install
-- hosts: jumpboxes_linux
-  become: true
-  become_user: root
-  roles:
-    - role: linux-jumpboxes-install
+#- hosts: jumpboxes_linux
+#  become: true
+#  become_user: root
+#  roles:
+#    - role: linux-jumpboxes-install
 
 # Windows jumpboxes components install
-- hosts: jumpboxes_windows
-  become: true
-  become_user: ADMIN_USER
-  roles:
-    - role: windows-jumpboxes-install
+#- hosts: jumpboxes_windows
+#  become: true
+#  become_user: ADMIN_USER
+#  roles:
+#    - role: windows-jumpboxes-install
