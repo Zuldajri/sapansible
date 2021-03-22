@@ -21,7 +21,6 @@
 
 # If current host is LargeInstance, creating swap will be skipped. 
 - name: Prepare SWAP
-  when: app_platform.vm_sizing != "LargeInstance"
   block:
   
   - name: Configure SWAP space
