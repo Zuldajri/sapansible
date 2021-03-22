@@ -67,7 +67,6 @@
   become_user: root
   vars:
     tier: preparation
-    app_sid: "S4SID"
   vars_files:
     - "vars/packages.yml"
   pre_tasks:
@@ -89,6 +88,7 @@
     tier: preparation
     sapadm_uid: 2100
     sapsys_gid: 2000
+    app_sid: "S4SID"
     scs_hostname: "{{ ansible_hostname }}"
     scs_instance_number: "00"
     sidadm_uid: 2000
