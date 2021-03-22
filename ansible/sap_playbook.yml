@@ -17,7 +17,7 @@
 
     - name: Create dictionary with APP inforamtion from output.JSON
       set_fact:
-        app_platform: "{{ item1 }}"
+        app_platform: "{{ item }}"
       loop: "{{ output.application|flatten(levels=1) }}"
 
 # Inventory validation for HANA VMs
