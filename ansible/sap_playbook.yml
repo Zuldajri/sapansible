@@ -78,7 +78,7 @@
   roles:
     - role: os-preparation-app
     - role: disk-setup
-    - role: nfs-server-setup
+    
 
 # Prepare SAP USERS
 - hosts: scs1
@@ -94,6 +94,7 @@
     sidadm_uid: 2000
   roles:
     - role: sap-users
+    - role: nfs-server-setup
 
 
 # Mount Azure File share on all linux jumpboxes including rti
