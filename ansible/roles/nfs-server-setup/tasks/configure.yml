@@ -5,11 +5,11 @@
     name: nfs-utils
     state: present
 
-#- name: Ensure NFS Server is running
-#  systemd:
-#    name: nfsserver
-#    state: started
-#    enabled: yes
+- name: Ensure NFS Server is running
+  systemd:
+    name: nfs
+    state: started
+    enabled: yes
 
 - name: Ensure expected base directories are present
   file:
@@ -33,7 +33,7 @@
 - name: Ensure nfsserver is running
   systemd:
     state: started
-    name: nfsserver
+    name: nfs
     daemon_reload: yes
 
 - name: Ensure file systems are exported
