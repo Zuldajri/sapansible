@@ -86,6 +86,7 @@
   become_user: root
   vars:
     tier: preparation
+    target_media_location: "/usr/sap/install"
     sapadm_uid: 2100
     sapsys_gid: 2000
     app_sid: "S4SID"
