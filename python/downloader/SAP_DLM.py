@@ -2,8 +2,6 @@
 # 
 #       SMP Downloader
 #
-#       License:        GNU General Public License (GPL)
-#       (c) 2019        Microsoft Corp.
 #
 import re
 
