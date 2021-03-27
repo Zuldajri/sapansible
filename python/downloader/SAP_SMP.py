@@ -2,8 +2,6 @@
 # 
 #       SMP Downloader
 #
-#       License:        GNU General Public License (GPL)
-#       (c) 2019        Microsoft Corp.
 #
 
 import urllib.error
@@ -217,3 +215,4 @@ class SMP:
             "Invalid search result format"
         results = j["d"]["results"]
         return results
+    
