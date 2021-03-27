@@ -2,8 +2,6 @@
 # 
 #       SMP Downloader
 #
-#       License:        GNU General Public License (GPL)
-#       (c) 2019        Microsoft Corp.
 #
 
 import json
@@ -12,7 +10,6 @@ import os.path
 import requests
 from requests.adapters import HTTPAdapter
 
-from SAP_Scenarios import *
 
 class HTTPSession(requests.Session):
     def __init__(self, auth=None, headers=None, retry=5):
@@ -102,35 +99,4 @@ class Config(object):
             sap_password  = data["credentials"]["sap_password"]
         )
 
-        # Scenarios section
-        assert("scenarios" in data), \
-            "At least one scenario needs to be specified"
-        Config.scenarios  = data["scenarios"]
-        for scenario_type in ("app", "db", "rti"):
-            relev_avail_scenarios = [s for s in Config.scenarios if s["scenario_type"].upper() == scenario_type.upper()]
-            if len(relev_avail_scenarios) == 0:
-                continue
-            assert(len(relev_avail_scenarios) == 1), \
-                "Cannot have more than one %s scenario" % scenario_type
-            s = ConfigSection(relev_avail_scenarios[0])
-            avail_scenarios = globals()["avail_%ss" % scenario_type]
-            assert(s.product_name in avail_scenarios), \
-                "Unknown %s scenario: %s" % (scenario_type, s.product_name)
-            matched_scenario = avail_scenarios[s.product_name]
-            assert(all(p in list(s.__dict__.keys()) for p in matched_scenario.required_params)), \
-                "Not all required parameters provided for %s scenario %s: %s" % \
-                (scenario_type, s.product_name, matched_scenario.required_params)
-            # copy required packages into instance variable
-            s.packages = matched_scenario.packages
-            setattr(
-                Config,
-                "%s_scenario" % scenario_type,
-                s,
-            )
-        bastions = [bastion for bastion in Config.scenarios if bastion["scenario_type"].upper() == "BASTION"]
-        for b in bastions:
-            assert("os_type" in b), \
-                "Need to specify OS for bastion host: %s" % b
-            assert(b["os_type"] not in Config.bastion_os), \
-                "Can only have one bastion host with OS %s" % b["os_type"]
-            Config.bastion_os.append(str(b["os_type"]))
+       
