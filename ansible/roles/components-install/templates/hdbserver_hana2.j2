@@ -52,7 +52,7 @@ create_initial_tenant=y
 checkmnt=
 
 # Installation Path ( Default: /hana/shared )
-sapmnt={{ hana_install_path }}
+sapmnt={{ hana_install_path }}/SAP_HANA_DATABASE
 
 # Local Host Name ( Default: {{ ansible_hostname }} )
 hostname={{ ansible_hostname }}
@@ -175,12 +175,12 @@ import_xs_content=y
 [Client]
 
 # SAP HANA Database Client Installation Path ( Default: ${sapmnt}/${sid}/hdbclient )
-client_path={{ hana_install_path }}/hdbclient
+client_path={{ hana_install_path }}/SAP_HANA_CLIENT
 
 [Studio]
 
 # SAP HANA Studio Installation Path ( Default: ${sapmnt}/${sid}/hdbstudio )
-studio_path={{ hana_install_path }}/hdbstudio
+studio_path={{ hana_install_path }}/SAP_HANA_STUDIO
 
 # Enables copying of SAP HANA Studio repository ( Default: y )
 studio_repository=y
