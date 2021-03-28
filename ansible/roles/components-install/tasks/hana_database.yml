@@ -16,44 +16,73 @@
     loop: "{{ hdb_variants|flatten(levels=1) }}"
     when: item.os == 'LINUX'
 
-- name: Check if a HANA database with the same SID has already been installed
-  shell: "{{ hana_software_loc }}/{{ hdb_media_facts.media_loc }}/{{ hdb_media_facts.installer }} --list_systems | grep {{ hana_database.instance.sid }}"
-  register: sid_existence_check_result
-  failed_when: false
+#- name: Check if a HANA database with the same SID has already been installed
+#  shell: "{{ hana_software_loc }}/{{ hdb_media_facts.media_loc }}/{{ hdb_media_facts.installer }} --list_systems | grep {{ hana_database.instance.sid }}"
+#  register: sid_existence_check_result
+#  failed_when: false
 
 - name: Install HANA database with SID {{ hana_database.instance.sid }}
-  when: sid_existence_check_result.rc != 0
-  block:
-  - name: Create install directories
-    file:
-      path: "{{ item }}"
-      state: directory
-    loop:
-      - "{{ hana_install_path }}/SAP_HANA_DATABASE"
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{ hana_install_path }}/SAP_HANA_DATABASE"
 
-  - name: Create install template for SAP HANA 1.0
-    template:
-      src:  hdbserver_hana1.j2 
-      dest: "{{ hana_install_path }}/hdbserver_{{ hana_database.instance.sid }}_install.cfg"
-    when: hana_database.db_version is regex("1([0-9]\d|[0-9]\d{2})\.\d{2}")  
+- name: Create install template for SAP HANA 2.0
+  template:
+    src: hdbserver_hana2.j2 
+    dest: "{{ hana_install_path }}/hdbserver_{{ hana_database.instance.sid }}_install.cfg"
+  when: hana_database.db_version is regex("2.\d{2}\.0([0-9]\d|[0-9]\d{2,})") 
 
-  - name: Create install template for SAP HANA 2.0
-    template:
-      src: hdbserver_hana2.j2 
-      dest: "{{ hana_install_path }}/hdbserver_{{ hana_database.instance.sid }}_install.cfg"
-    when: hana_database.db_version is regex("2.\d{2}\.0([0-9]\d|[0-9]\d{2,})") 
+- name: Create password file for hdblcm installer
+  template:
+    src: hdbserver_passwords.j2
+    dest: "{{ hana_install_path }}/hdbserver_{{ hana_database.instance.sid }}_passwords.xml"
 
-  - name: Create password file for hdblcm installer
-    template:
-      src: hdbserver_passwords.j2
-      dest: "{{ hana_install_path }}/hdbserver_{{ hana_database.instance.sid }}_passwords.xml"
+- name: copy sapcar
+  shell: cp {{ azure_files_mount_path }}/Archives/SAPCAR_1010-70006178.EXE {{ hana_install_path }}/SAPCAR_1010-70006178.EXE
+  
+- name: copy Hana Install File
+  shell: cp {{ azure_files_mount_path }}/Archives/IMDB_SERVER20_055_0-80002031.SAR {{ hana_install_path }}/IMDB_SERVER20_055_0-80002031.SAR
 
-  - name: Install HANA Database using hdblcm
-    shell: "pwd=$(<../hdbserver_{{ hana_database.instance.sid }}_passwords.xml); rm ../hdbserver_{{ hana_database.instance.sid }}_passwords.xml; echo $pwd | {{ hana_software_loc }}/{{ hdb_media_facts.media_loc }}/{{ hdb_media_facts.installer }} --sid={{ hana_database.instance.sid }} --batch --action=install --configfile='../hdbserver_{{ hana_database.instance.sid }}_install.cfg' --read_password_from_stdin=xml"
-    args:
-      chdir: "{{ hana_install_path }}/SAP_HANA_DATABASE"
+- name: add permission sapcar
+  shell: chmod +x {{ hana_install_path }}/SAPCAR_1010-70006178.EXE
 
-  - name: Delete install template file
-    file: 
-      path: "{{ hana_install_path }}/hdbserver_{{ hana_database.instance.sid }}_install.cfg" 
-      state: absent
+- name: create sapsys group 
+  group: name=sapsys gid={{ sapsys_gid }}
+
+- name: create sapadm user
+  user:
+    name: sapadm
+    uid: "{{ sapadm_uid }}"
+    group: sapsys
+    password: "{{ HANA_MASTER_PASSWORD|password_hash('sha512') }}"
+
+- name: increase file handles to 32800 for sapsys group
+  pam_limits: domain="@sapsys" limit_item=core limit_type={{ item }} value=32800
+  with_items:
+    - soft
+    - hard
+
+- name: set number of process to unlimited for sapsys group
+  pam_limits: domain="@sapsys" limit_item=nproc limit_type={{ item }} value=unlimited
+  with_items:
+    - soft
+    - hard
+
+- name: extract hana
+  shell: {{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_DATABASE/SIGNATURE.SMF -xf {{ hana_install_path }}/IMDB_SERVER20_055_0-80002031.SAR
+ 
+
+
+
+
+- name: Install HANA Database using hdblcm
+  shell: "pwd=$(<../hdbserver_{{ hana_database.instance.sid }}_passwords.xml); rm ../hdbserver_{{ hana_database.instance.sid }}_passwords.xml; echo $pwd | {{ hana_software_loc }}/{{ hdb_media_facts.media_loc }}/{{ hdb_media_facts.installer }} --sid={{ hana_database.instance.sid }} --batch --action=install --configfile='../hdbserver_{{ hana_database.instance.sid }}_install.cfg' --read_password_from_stdin=xml"
+  args:
+    chdir: "{{ hana_install_path }}/SAP_HANA_DATABASE"
+
+- name: Delete install template file
+  file: 
+    path: "{{ hana_install_path }}/hdbserver_{{ hana_database.instance.sid }}_install.cfg" 
+    state: absent
