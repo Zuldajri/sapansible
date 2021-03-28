@@ -70,22 +70,22 @@
     dest: "{{ hana_install_path }}/hdbserver_{{ hana_database.instance.sid }}_passwords.xml"
 
 - name: copy sapcar
-  shell: cp {{ azure_files_mount_path }}/Archives/SAPCAR_1010-70006178.EXE {{ hana_install_path }}/SAPCAR_1010-70006178.EXE
+  shell: "cp {{ azure_files_mount_path }}/Archives/SAPCAR_1010-70006178.EXE {{ hana_install_path }}/SAPCAR_1010-70006178.EXE"
   
 - name: copy Hana Install File
-  shell: cp {{ azure_files_mount_path }}/Archives/IMDB_SERVER20_055_0-80002031.SAR {{ hana_install_path }}/IMDB_SERVER20_055_0-80002031.SAR
+  shell: "cp {{ azure_files_mount_path }}/Archives/IMDB_SERVER20_055_0-80002031.SAR {{ hana_install_path }}/IMDB_SERVER20_055_0-80002031.SAR"
 
 - name: copy Hana Client
-  shell: cp {{ azure_files_mount_path }}/Archives/IMDB_CLIENT20_007_26-80002082.SAR {{ hana_install_path }}/IMDB_CLIENT20_007_26-80002082.SAR
+  shell: "cp {{ azure_files_mount_path }}/Archives/IMDB_CLIENT20_007_26-80002082.SAR {{ hana_install_path }}/IMDB_CLIENT20_007_26-80002082.SAR"
 
 - name: copy Hana Studio
-  shell: cp {{ azure_files_mount_path }}/Archives/IMC_STUDIO2_255_0-80000321.SAR {{ hana_install_path }}/IMC_STUDIO2_255_0-80000321.SAR
+  shell: "cp {{ azure_files_mount_path }}/Archives/IMC_STUDIO2_255_0-80000321.SAR {{ hana_install_path }}/IMC_STUDIO2_255_0-80000321.SAR"
 
 - name: copy LCAPPS
-  shell: cp {{ azure_files_mount_path }}/Archives/IMDB_LCAPPS_2055_0-20010426.SAR {{ hana_install_path }}/IMDB_LCAPPS_2055_0-20010426.SAR
+  shell: "cp {{ azure_files_mount_path }}/Archives/IMDB_LCAPPS_2055_0-20010426.SAR {{ hana_install_path }}/IMDB_LCAPPS_2055_0-20010426.SAR"
 
 - name: add permission sapcar
-  shell: chmod +x {{ hana_install_path }}/SAPCAR_1010-70006178.EXE
+  shell: "chmod +x {{ hana_install_path }}/SAPCAR_1010-70006178.EXE"
 
 - name: create sapsys group 
   group: name=sapsys gid={{ sapsys_gid }}
@@ -110,16 +110,16 @@
     - hard
 
 - name: extract hana
-  shell: {{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_DATABASE/SIGNATURE.SMF -xf {{ hana_install_path }}/IMDB_SERVER20_055_0-80002031.SAR
+  shell: "{{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_DATABASE/SIGNATURE.SMF -xf {{ hana_install_path }}/IMDB_SERVER20_055_0-80002031.SAR"
  
 - name: extract client
-  shell: {{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_CLIENT/SIGNATURE.SMF -xf {{ hana_install_path }}/IMDB_CLIENT20_007_26-80002082.SAR
+  shell: "{{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_CLIENT/SIGNATURE.SMF -xf {{ hana_install_path }}/IMDB_CLIENT20_007_26-80002082.SAR"
 
 - name: extract studio
-  shell: {{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_STUDIO/SIGNATURE.SMF -xf {{ hana_install_path }}/IMC_STUDIO2_255_0-80000321.SAR
+  shell: "{{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_STUDIO/SIGNATURE.SMF -xf {{ hana_install_path }}/IMC_STUDIO2_255_0-80000321.SAR"
 
 - name: extract LCAPPS
-  shell: {{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_LCAPPS/SIGNATURE.SMF -xf {{ hana_install_path }}/IMDB_LCAPPS_2055_0-20010426.SAR
+  shell: "{{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_LCAPPS/SIGNATURE.SMF -xf {{ hana_install_path }}/IMDB_LCAPPS_2055_0-20010426.SAR"
 
 
 - name: Install HANA Database using hdblcm
