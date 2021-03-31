@@ -29,12 +29,7 @@
       when:
         - hana_database.size != "LargeInstance"
 
-# Inventory validation for HANA VMs
-#- hosts: scs
-#  become: true
-#  become_user: root
-#  roles:
-#    - role: inventory-validation
+
       
 
 # Prepare os, disks and mount points on Hana Database servers
