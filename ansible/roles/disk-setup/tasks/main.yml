@@ -2,7 +2,7 @@
 
 - name: "Ensure variables are included"
   include_vars:
-    file: "../../../vars/sap-disks.yml"
+    file: "/var/lib/waagent/custom-script/download/0/sapansible/ansible/vars/sap-disks.yml"
 
 - name: "Ensure Volume Group(s) are present"
   lvg:
