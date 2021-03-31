@@ -71,7 +71,8 @@
         name: app_sizes
   max_fail_percentage: 0
   roles:
-    - role: os-preparation-app
+    - role: dependencies-install
+    - role: swap-setup
     - role: disk-setup
     
 
