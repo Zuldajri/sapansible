@@ -109,31 +109,5 @@
     - soft
     - hard
 
-- name: extract hana
-  shell: "{{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_DATABASE/SIGNATURE.SMF -xf {{ hana_install_path }}/IMDB_SERVER20_055_0-80002031.SAR"
- 
-- name: extract client
-  shell: "{{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_CLIENT/SIGNATURE.SMF -xf {{ hana_install_path }}/IMDB_CLIENT20_007_26-80002082.SAR"
-
-- name: extract studio
-  shell: "{{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_STUDIO/SIGNATURE.SMF -xf {{ hana_install_path }}/IMC_STUDIO2_255_0-80000321.SAR"
-
-- name: extract LCAPPS
-  shell: "{{ hana_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_install_path }}/SAP_HANA_LCAPPS/SIGNATURE.SMF -xf {{ hana_install_path }}/IMDB_LCAPPS_2055_0-20010426.SAR"
-
-
-- name: Install HANA Database using hdblcm
-  shell: "cat {{ hana_install_path }}/hdbserver_{{ hana_database.instance.sid }}_passwords.xml | {{ hana_install_path }}/SAP_HANA_DATABASE/hdblcm --read_password_from_stdin=xml -b --configfile={{ hana_install_path }}/hdbserver_{{ hana_database.instance.sid }}_install.cfg"
-  
-- name: Delete install template file
-  file: 
-    path: "{{ hana_install_path }}/hdbserver_{{ hana_database.instance.sid }}_install.cfg" 
-    state: absent
-
-- name: Install HANA LCAPPS using hdbinst
-  shell: "{{ hana_install_path }}/SAP_HANA_LCAPPS/hdbinst --sid={{ hana_database.instance.sid | upper }}"
-
-- name: Install HANA client using hdbinst
-  shell: "{{ hana_install_path }}/SAP_HANA_CLIENT/hdbinst --sapmnt={{ hana_install_path }}/SAP_HANA_CLIENT"
 
 
