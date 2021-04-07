@@ -11,7 +11,7 @@
     path: "{{ item }}"
     state: directory
   loop:
-    - "{{ hana_client_install_path }}"
+    - "{{ hana_client_install_path }}/SAP_HANA_CLIENT"
 
 - name: copy sapcar
   shell: "cp {{ azure_files_mount_path }}/Archives/SAPCAR_1010-70006178.EXE {{ hana_client_install_path }}/SAPCAR_1010-70006178.EXE"
@@ -23,11 +23,11 @@
   shell: "chmod +x {{ hana_client_install_path }}/SAPCAR_1010-70006178.EXE"
 
 - name: extract client
-  shell: "{{ hana_client_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_client_install_path }}/SIGNATURE.SMF -xf {{ hana_client_install_path }}/IMDB_CLIENT20_007_26-80002082.SAR"
+  shell: "{{ hana_client_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_client_install_path }}/SAP_HANA_CLIENT/SIGNATURE.SMF -xf {{ hana_client_install_path }}/IMDB_CLIENT20_007_26-80002082.SAR"
 
 
 
 - name: Install Hana Client on Linux 
-  shell: "{{ hana_client_install_path }}/hdbinst -a client -b --hostname={{ ansible_hostname }} --path={{ hana_client_install_path }}"
+  shell: "{{ hana_client_install_path }}/SAP_HANA_CLIENT/hdbinst -a client -b --hostname={{ ansible_hostname }} --path={{ hana_client_install_path }}/SAP_HANA_CLIENT"
   loop: "{{ client.variants|flatten(levels=1) }}"
   when: item.os == 'LINUX'
