@@ -11,24 +11,24 @@
     path: "{{ item }}"
     state: directory
   loop:
-    - "{{ hana_studio_install_path }}"
+    - "{{ hana_studio_install_path }}/SAP_HANA_STUDIO"
 
 - name: copy sapcar
   shell: "cp {{ azure_files_mount_path }}/Archives/SAPCAR_1010-70006178.EXE {{ hana_studio_install_path }}/SAPCAR_1010-70006178.EXE"
 
-- name: copy Hana Client
+- name: copy Hana Studio
   shell: "cp {{ azure_files_mount_path }}/Archives/IMC_STUDIO2_255_0-80000321.SAR {{ hana_studio_install_path }}/IMC_STUDIO2_255_0-80000321.SAR"
 
 - name: add permission sapcar
   shell: "chmod +x {{ hana_studio_install_path }}/SAPCAR_1010-70006178.EXE"
 
-- name: extract client
-  shell: "{{ hana_studio_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_studio_install_path }}/SIGNATURE.SMF -xf {{ hana_studio_install_path }}/IMC_STUDIO2_255_0-80000321.SAR"
+- name: extract studio
+  shell: "{{ hana_studio_install_path }}/SAPCAR_1010-70006178.EXE -manifest {{ hana_studio_install_path }}/SAP_HANA_STUDIO/SIGNATURE.SMF -xf {{ hana_studio_install_path }}/IMC_STUDIO2_255_0-80000321.SAR"
 
 
 
 
 - name: Install HANA Studio on Linux
-  shell: "{{ hana_studio_install_path }}/SAP_HANA_STUDIO/hdbinst -a studio -b --path={{ hana_studio_install_path }}"
+  shell: "{{ hana_studio_install_path }}/SAP_HANA_STUDIO/hdbinst -a studio -b --path={{ hana_studio_install_path }}/SAP_HANA_STUDIO"
   loop: "{{ studio.variants|flatten(levels=1) }}"
   when: item.os == 'LINUX'
