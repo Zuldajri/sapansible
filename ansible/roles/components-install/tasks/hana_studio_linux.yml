@@ -29,6 +29,6 @@
 
 
 - name: Install HANA Studio on Linux
-  shell: "{{ hana_client_install_path }}/hdbinst -a studio -b --path={{ hana_studio_install_path }}"
+  shell: "{{ hana_studio_install_path }}/hdbinst -a studio -b --path={{ hana_studio_install_path }}"
   loop: "{{ studio.variants|flatten(levels=1) }}"
   when: item.os == 'LINUX'
