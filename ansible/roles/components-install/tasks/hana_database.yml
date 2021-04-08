@@ -87,27 +87,7 @@
 - name: add permission sapcar
   shell: "chmod +x {{ hana_install_path }}/SAPCAR_1010-70006178.EXE"
 
-- name: create sapsys group 
-  group: name=sapsys gid={{ sapsys_gid }}
 
-- name: create sapadm user
-  user:
-    name: sapadm
-    uid: "{{ sapadm_uid }}"
-    group: sapsys
-    password: "{{ HANA_MASTER_PASSWORD|password_hash('sha512') }}"
-
-- name: increase file handles to 32800 for sapsys group
-  pam_limits: domain="@sapsys" limit_item=core limit_type={{ item }} value=32800
-  with_items:
-    - soft
-    - hard
-
-- name: set number of process to unlimited for sapsys group
-  pam_limits: domain="@sapsys" limit_item=nproc limit_type={{ item }} value=unlimited
-  with_items:
-    - soft
-    - hard
 
 
 
