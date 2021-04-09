@@ -47,7 +47,7 @@ results = [{'Fastkey': '0030000001666342020', 'Description': 'S4HANAOP105_ERP_LA
 {'Fastkey': '0020000000149592021', 'Description': 'SP12 Patch3 for UMML4HANA 1', 'Filesize': 268, 'Infotype': 'ZIP'},
 {'Fastkey': '0010000000216182021', 'Description': 'SPAM/SAINT Update - Version 755/0077', 'Filesize': 9932, 'Infotype': 'SAR'},
 {'Fastkey': '0010000001984822020', 'Description': 'ST-PI 740: SP 0014', 'Filesize': 8529, 'Infotype': 'SAR'},
-{'Fastkey': '0020000000451992021', 'Description': 'SWPM20SP08', 'Filesize': 164897, 'Infotype': 'SAR'},
+{'Fastkey': '0020000000515542021', 'Description': 'SWPM20SP08', 'Filesize': 164897, 'Infotype': 'SAR'},
 {'Fastkey': '0010000001013272020', 'Description': 'UIAPFI70 800: Add-On Installation', 'Filesize': 265495, 'Infotype': 'SAR'},
 {'Fastkey': '0010000000638612020', 'Description': 'UIBAS001 600: Add-On Installation', 'Filesize': 107187, 'Infotype': 'SAR'},
 {'Fastkey': '0010000019183952017', 'Description': 'UIHR002 100: Add-On Installation', 'Filesize': 2610, 'Infotype': 'SAR'},
