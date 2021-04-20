@@ -49,7 +49,7 @@ results = [{'Fastkey': '0010000000211202021', 'Description': 'Attribute Change P
 {'Fastkey': '0020000001634982020', 'Description': 'Installation for SAP IGS integrated in SAP Kernel', 'Filesize': 134953, 'Infotype': 'SAR'},
 {'Fastkey': '0020000000281972021', 'Description': 'Kernel Part I (781)', 'Filesize': 296386, 'Infotype': 'SAR'},
 {'Fastkey': '0020000000281722021', 'Description': 'Kernel Part II (781)', 'Filesize': 7505, 'Infotype': 'SAR'},
-{'Fastkey': '0020000000422652021', 'Description': 'Patch 2 for SOFTWARE UPDATE MANAGER 2.0 SP10', 'Filesize': 347058, 'Infotype': 'SAR'},
+{'Fastkey': '0020000000570672021', 'Description': 'Patch 3 for SOFTWARE UPDATE MANAGER 2.0 SP10', 'Filesize': 345461, 'Infotype': 'SAR'},
 {'Fastkey': '0020000000410162020', 'Description': 'Predi. Analy. APL 2008 for SAP HANA 2.0 SPS03 and beyond', 'Filesize': 56889, 'Infotype': 'ZIP'},
 {'Fastkey': '0030000001666752020', 'Description': 'S4CORE105_INST_EXPORT_1.zip', 'Filesize': 6, 'Infotype': 'ZIP'},
 {'Fastkey': '0030000001666762020', 'Description': 'S4CORE105_INST_EXPORT_10.zip', 'Filesize': 1437597, 'Infotype': 'ZIP'},
