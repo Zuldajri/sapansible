@@ -74,7 +74,25 @@
     - role: dependencies-install
     - role: swap-setup
     - role: disk-setup
-    
+
+# Prepare os, disks and mount points on APP server
+- hosts: app
+  become: true
+  become_user: root
+  vars:
+    tier: preparation
+  vars_files:
+    - "vars/packages.yml"
+  pre_tasks:
+    - name: Include SAP APP sizes
+      include_vars:
+        file: "{{ configs_path }}/app_sizes.json"
+        name: app_sizes
+  max_fail_percentage: 0
+  roles:
+    - role: dependencies-install
+    - role: swap-setup
+    - role: disk-setup
 
 # Prepare SAP USERS
 - hosts: scs1
@@ -96,6 +114,14 @@
 
 # Mount Azure File share on all linux jumpboxes including rti
 - hosts: scs
+  become: true
+  become_user: root
+  roles:
+    - role: mount-azure-files
+      when: output.software.storage_account_sapbits.file_share_name != ""
+      
+# Mount Azure File share on all linux jumpboxes including rti
+- hosts: app
   become: true
   become_user: root
   roles:
