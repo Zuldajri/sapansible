@@ -41,13 +41,6 @@
     state: directory
   loop:
     - "{{ hana_install_path }}/SAP_HANA_STUDIO"
-    
-- name: Install HANA studio with SID {{ hana_database.instance.sid }}
-  file:
-    path: "{{ item }}"
-    state: directory
-  loop:
-    - "{{ hana_install_path }}/SAP_HANA_LCAPPS"
 
 - name: Create the HANA specific directories
   file:
@@ -80,9 +73,6 @@
 
 - name: copy Hana Studio
   shell: "cp {{ azure_files_mount_path }}/Archives/IMC_STUDIO2_255_0-80000321.SAR {{ hana_install_path }}/IMC_STUDIO2_255_0-80000321.SAR"
-
-- name: copy LCAPPS
-  shell: "cp {{ azure_files_mount_path }}/Archives/IMDB_LCAPPS_2055_0-20010426.SAR {{ hana_install_path }}/IMDB_LCAPPS_2055_0-20010426.SAR"
 
 - name: add permission sapcar
   shell: "chmod +x {{ hana_install_path }}/SAPCAR_1010-70006178.EXE"
