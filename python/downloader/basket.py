@@ -41,7 +41,6 @@ results = [{'Fastkey': '0020000000381822021', 'Description': 'SAP HANA CLIENT Ve
 {'Fastkey': '0020000000392102021', 'Description': 'Revision 255.00 for SAP HANA STUDIO 2', 'Filesize': 1076514, 'Infotype': 'SAR'},
 {'Fastkey': '0020000000392142021', 'Description': 'Revision 255.00 for SAP HANA STUDIO 2', 'Filesize': 1041717, 'Infotype': 'SAR'},
 {'Fastkey': '0020000002208852020', 'Description': 'SAPCAR', 'Filesize': 4378, 'Infotype': 'EXE'},
-{'Fastkey': '0020000000393992021', 'Description': 'LCAPPS for HANA 2.00.055.00 Build 100.47 PL 009', 'Filesize': 106958, 'Infotype': 'SAR'},
 {'Fastkey': '0020000000392162021', 'Description': 'Revision 2.00.055.0 (SPS05) for HANA DB 2.0', 'Filesize': 3611696, 'Infotype': 'SAR'}]
 
 cnt     = 0
